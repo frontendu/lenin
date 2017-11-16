@@ -1,5 +1,8 @@
 image: node:8.9.1-alpine
 
+before_script:
+  - npm install
+
 stages:
   - build
   - test
