@@ -1,9 +1,7 @@
 const config = require('config');
 const Telegraf = require('telegraf')
 
-const {
-	adjectives
-} = require('./services')
+const adjectives = require('./adjectives')
 
 const {
 	greeting

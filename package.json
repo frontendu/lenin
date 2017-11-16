@@ -18,6 +18,7 @@
   "dependencies": {
     "config": "^1.28.1",
     "dynoping": "github:underoot/dynoping",
+    "lodash": "^4.17.4",
     "telegraf": "^3.15.3"
   }
 }
