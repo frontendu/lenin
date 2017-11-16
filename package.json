@@ -1,0 +1,23 @@
+{
+  "name": "@frontendu/lenin",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Bot of Frontend Young team",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src",
+    "web": "dynoping",
+    "test": ":"
+  },
+  "keywords": [
+    "bot",
+    "telegram"
+  ],
+  "author": "Aleksandr Shoronov <alexshoronov@gmail.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "config": "^1.28.1",
+    "dynoping": "github:underoot/dynoping",
+    "telegraf": "^3.15.3"
+  }
+}

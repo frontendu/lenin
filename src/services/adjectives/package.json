@@ -1,0 +1,18 @@
+{
+  "name": "adjectives",
+  "version": "1.0.0",
+  "description": "Get random adjective",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "service",
+    "grammar"
+  ],
+  "author": "Aleskandr Shoronov <alexshoronov@gmail.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
+}
