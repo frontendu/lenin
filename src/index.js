@@ -7,7 +7,9 @@ const {
 	greeting
 } = require('./templates');
 
-const bot = new Telegraf(config.token);
+const bot = new Telegraf(config.token, {
+	username: 'LeninMolodoyBot'
+});
 
 bot.start((ctx) => {
 	return ctx.reply('Йо, Йо, Йо!')
