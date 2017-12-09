@@ -1,3 +1,7 @@
+const {
+	isEmpty,
+	mergeWith
+} = require('lodash');
 const config = require('config');
 const Telegraf = require('telegraf');
 
@@ -6,6 +10,7 @@ const trello = require('./trello');
 
 const {
 	add,
+	empty,
 	greeting
 } = require('./templates');
 
@@ -13,14 +18,36 @@ const bot = new Telegraf(config.telegram.token, {
 	username: config.telegram.username
 });
 
-const getCardContent = ({message: {text}}) => {
+const getCardContent = ({text}) => {
 	const [greeting, ...parts] = text.split(' ');
-	const [name, desc] = parts.join('').split(/\n\n/);
+	const [name = '', desc = ''] = greeting[0] === '/'
+		? parts.join(' ').split(/\n\n/)
+		: [greeting, ...parts].join(' ').split(/\n\n/);
 
 	return {
-		name,
-		desc
+		name: name.trim(),
+		desc: desc.trim()
 	};
+};
+
+
+const swapContent = ({name, desc}) => {
+	return {
+		name: desc,
+		desc: name
+	};
+};
+
+function mergeEmpty(objValue, srcValue) {
+  return isEmpty(srcValue) ? objValue : srcValue;
+}
+
+const haveReplyTo = (message) => {
+	return !!message['reply_to_message'];
+};
+
+const getReplyTo = (message) => {
+	return message['reply_to_message'];
 }
 
 bot.start((ctx) => {
@@ -34,8 +61,21 @@ bot.command('greating', (ctx) => {
 });
 
 bot.command('add', (ctx) => {
+	const content = haveReplyTo(ctx.message)
+		? mergeWith(
+				getCardContent(ctx.message),
+				swapContent(getCardContent(getReplyTo(ctx.message))),
+				mergeEmpty
+		)
+		: getCardContent(ctx.message);
+
+	if (!content.name) {
+		ctx.reply(empty());
+		return;
+	}
+
 	trello
-		.addCard(getCardContent(ctx))
+		.addCard(content)
 		.then(({body: {url}}) => {
 			ctx.reply(add(url));
 		});
