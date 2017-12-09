@@ -30,7 +30,6 @@ const getCardContent = ({text}) => {
 	};
 };
 
-
 const swapContent = ({name, desc}) => {
 	return {
 		name: desc,
@@ -63,8 +62,8 @@ bot.command('greating', (ctx) => {
 bot.command('add', (ctx) => {
 	const content = haveReplyTo(ctx.message)
 		? mergeWith(
-				getCardContent(ctx.message),
-				swapContent(getCardContent(getReplyTo(ctx.message))),
+				swapContent(getCardContent(getReplyTo(ctx.message)))
+				getCardContent(ctx.message)
 				mergeEmpty
 		)
 		: getCardContent(ctx.message);
