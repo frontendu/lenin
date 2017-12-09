@@ -30,23 +30,8 @@ const getCardContent = ({text}) => {
 	};
 };
 
-const swapContent = ({name, desc}) => {
-	return {
-		name: desc,
-		desc: name
-	};
-};
-
 function mergeEmpty(objValue, srcValue) {
   return isEmpty(srcValue) ? objValue : srcValue;
-}
-
-const haveReplyTo = (message) => {
-	return !!message['reply_to_message'];
-};
-
-const getReplyTo = (message) => {
-	return message['reply_to_message'];
 }
 
 bot.start((ctx) => {
@@ -55,18 +40,13 @@ bot.start((ctx) => {
 
 bot.command('greating', (ctx) => {
 	ctx.reply(greeting(adjectives.getAdjective()), {
+		reply_to_message_id: ctx.message.id,
 		parse_mode: 'Markdown'
 	})
 });
 
 bot.command('add', (ctx) => {
-	const content = haveReplyTo(ctx.message)
-		? mergeWith(
-				swapContent(getCardContent(getReplyTo(ctx.message))),
-				getCardContent(ctx.message),
-				mergeEmpty
-		)
-		: getCardContent(ctx.message);
+	const content = getCardContent(ctx.message);
 
 	if (!content.name) {
 		ctx.reply(empty());
@@ -76,7 +56,9 @@ bot.command('add', (ctx) => {
 	trello
 		.addCard(content)
 		.then(({body: {url}}) => {
-			ctx.reply(add(url));
+			ctx.reply(add(url), {
+				reply_to_message_id: ctx.message.id,
+			});
 		});
 });
 
