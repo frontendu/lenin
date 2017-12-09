@@ -19,6 +19,10 @@
     "config": "^1.28.1",
     "dynoping": "github:underoot/dynoping",
     "lodash": "^4.17.4",
+    "request": "^2.83.0",
     "telegraf": "^3.15.3"
+  },
+  "devDependencies": {
+    "lerna": "^2.5.1"
   }
 }
