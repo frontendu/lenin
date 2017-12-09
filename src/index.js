@@ -62,8 +62,8 @@ bot.command('greating', (ctx) => {
 bot.command('add', (ctx) => {
 	const content = haveReplyTo(ctx.message)
 		? mergeWith(
-				swapContent(getCardContent(getReplyTo(ctx.message)))
-				getCardContent(ctx.message)
+				swapContent(getCardContent(getReplyTo(ctx.message))),
+				getCardContent(ctx.message),
 				mergeEmpty
 		)
 		: getCardContent(ctx.message);
