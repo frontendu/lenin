@@ -40,7 +40,7 @@ bot.start((ctx) => {
 
 bot.command('greating', (ctx) => {
 	ctx.reply(greeting(adjectives.getAdjective()), {
-		reply_to_message_id: ctx.message.id,
+		reply_to_message_id: ctx.message.message_id,
 		parse_mode: 'Markdown'
 	})
 });
@@ -49,7 +49,9 @@ bot.command('add', (ctx) => {
 	const content = getCardContent(ctx.message);
 
 	if (!content.name) {
-		ctx.reply(empty());
+		ctx.reply(empty(), {
+			reply_to_message_id: ctx.message.message_id,
+		});
 		return;
 	}
 
@@ -57,7 +59,7 @@ bot.command('add', (ctx) => {
 		.addCard(content)
 		.then(({body: {url}}) => {
 			ctx.reply(add(url), {
-				reply_to_message_id: ctx.message.id,
+				reply_to_message_id: ctx.message.message_id,
 			});
 		});
 });
