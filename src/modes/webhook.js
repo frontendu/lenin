@@ -6,7 +6,7 @@ const { promisify } = require('util');
 const getWebhookPath = () => {
 	return promisify(crypto.randomBytes)(16)
 		.then(bytes => bytes.toString('hex'))
-		.then(hex => `/${hex}`);
+		.then(hex => `${host}/${hex}`);
 };
 
 /**
@@ -16,11 +16,12 @@ const getWebhookPath = () => {
  * @param {Object} options
  * @param {Object} options.bot
  * @param {Object} options.params
+ * @param {string} options.params.host
  * @param {string} options.params.webhook
  * @param {number} options.params.port
  */
 module.exports = (options) => {
-	const path = getWebhookPath();
+	const path = getWebhookPath(options.params.host);
 
 	options.bot.telegram.setWebhook(path)
 	options.bot.startWebhook(path, null, options.params.port);
