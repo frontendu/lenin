@@ -1,12 +1,12 @@
 'use strict';
 
 const crypto = require('crypto');
-const {promisify} = require('util');
+const { promisify } = require('util');
 
 const getWebhookPath = () => {
-    return promisify(crypto.randomBytes)(16)
-        .then(bytes => bytes.toString('hex'))
-        .then(hex => `/${hex}`);
+	return promisify(crypto.randomBytes)(16)
+		.then(bytes => bytes.toString('hex'))
+		.then(hex => `/${hex}`);
 };
 
 /**
@@ -20,9 +20,8 @@ const getWebhookPath = () => {
  * @param {number} options.params.port
  */
 module.exports = (options) => {
-    const path = getWebhookPath();
+	const path = getWebhookPath();
 
-    options.bot
-        .telegram.setWebhook(path)
-        .startWebhook(path, null, options.params.port);
-}
+	options.bot.telegram.setWebhook(path)
+	options.bot.startWebhook(path, null, options.params.port);
+};
