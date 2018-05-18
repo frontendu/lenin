@@ -1,5 +1,7 @@
+'use strict';
+
 module.exports = {
-    telegram: {
-        mode: 'polling'
-    }
+	telegram: {
+		mode: 'polling'
+	}
 };
