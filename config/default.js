@@ -5,7 +5,7 @@ module.exports = {
 		mode: 'webhook',
 		token: process.env.TELEGRAM_API_TOKEN,
 		username: process.env.TELEGRAM_API_USERNAME,
-        port: process.env.PORT
+		port: process.env.PORT
 	},
 	trello: {
 		key: process.env.TRELLO_KEY,
