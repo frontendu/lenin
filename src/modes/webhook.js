@@ -20,8 +20,8 @@ const getWebhookPath = (host) => {
  * @param {string} options.params.webhook
  * @param {number} options.params.port
  */
-module.exports = (options) => {
-	const path = getWebhookPath(options.params.host);
+module.exports = async (options) => {
+	const path = await getWebhookPath(options.params.host);
 
 	options.bot.telegram.setWebhook(path)
 	options.bot.startWebhook(path, null, options.params.port);
