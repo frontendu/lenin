@@ -3,7 +3,7 @@
 const crypto = require('crypto');
 const { promisify } = require('util');
 
-const getWebhookPath = () => {
+const getWebhookPath = (host) => {
 	return promisify(crypto.randomBytes)(16)
 		.then(bytes => bytes.toString('hex'))
 		.then(hex => `${host}/${hex}`);
