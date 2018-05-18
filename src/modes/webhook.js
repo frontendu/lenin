@@ -1,0 +1,28 @@
+'use strict';
+
+const crypto = require('crypto');
+const {promisify} = require('util');
+
+const getWebhookPath = () => {
+    return promisify(crypto.randomBytes)(16)
+        .then(bytes => bytes.toString('hex'))
+        .then(hex => `/${hex}`);
+};
+
+/**
+ * Webhook-mode for bot. Useful for production environments
+ * such as Heroku etc.
+ *
+ * @param {Object} options
+ * @param {Object} options.bot
+ * @param {Object} options.params
+ * @param {string} options.params.webhook
+ * @param {number} options.params.port
+ */
+module.exports = (options) => {
+    const path = getWebhookPath();
+
+    options.bot
+        .telegram.setWebhook(path)
+        .startWebhook(path, null, options.params.port);
+}

@@ -1,23 +1,27 @@
-const {
-	isEmpty,
-	mergeWith
-} = require('lodash');
+'use strict';
+
 const config = require('config');
 const Telegraf = require('telegraf');
+const modes = require('./modes');
 
-const adjectives = require('./adjectives');
-const trello = require('./trello');
 
-const {
-	add,
-	empty,
-	greeting
-} = require('./templates');
+const bot = new Telegraf(config.get('telegram.token'));
 
-const bot = new Telegraf(config.telegram.token, {
-	username: config.telegram.username
+bot
+	.start(ctx => {
+		return ctx.reply('Йо, Йо, Йо!');
+	});
+
+modes[config.get('telegram.mode')]({
+	bot,
+	params: config.get('telegram')
 });
 
+/**
+ * @todo Make it works
+ */
+
+/*
 const getCardContent = ({text}) => {
 	const [greeting, ...parts] = text.split(' ');
 	const [name = '', desc = ''] = greeting[0] === '/'
@@ -33,10 +37,6 @@ const getCardContent = ({text}) => {
 function mergeEmpty(objValue, srcValue) {
   return isEmpty(srcValue) ? objValue : srcValue;
 }
-
-bot.start((ctx) => {
-	return ctx.reply('Йо, Йо, Йо!');
-});
 
 bot.command('greating', (ctx) => {
 	ctx.reply(greeting(adjectives.getAdjective()), {
@@ -65,3 +65,4 @@ bot.command('add', (ctx) => {
 });
 
 bot.startPolling()
+*/

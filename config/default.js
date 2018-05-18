@@ -1,7 +1,11 @@
+'use strict';
+
 module.exports = {
 	telegram: {
-		token: process.env.TELEGRAM_API_KEY,
-		username: process.env.TELEGRAM_API_USERNAME
+		mode: 'webhook',
+		token: process.env.TELEGRAM_API_TOKEN,
+		username: process.env.TELEGRAM_API_USERNAME,
+        port: process.env.PORT
 	},
 	trello: {
 		key: process.env.TRELLO_KEY,
