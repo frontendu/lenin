@@ -2,67 +2,45 @@
 
 const config = require('config');
 const Telegraf = require('telegraf');
+const Stage = require('telegraf/stage');
+const session = require('telegraf/session');
 const modes = require('./modes');
+const parts = require('./parts');
+const trello = require('./services/trello');
 
 
-const bot = new Telegraf(config.get('telegram.token'));
-
-bot
-	.start(ctx => {
-		return ctx.reply('Йо, Йо, Йо!');
-	});
-
-modes[config.get('telegram.mode')]({
-	bot,
-	params: config.get('telegram')
-});
-
-/**
- * @todo Make it works
- */
-
-/*
-const getCardContent = ({text}) => {
-	const [greeting, ...parts] = text.split(' ');
-	const [name = '', desc = ''] = greeting[0] === '/'
-		? parts.join(' ').split(/\n\n/)
-		: [greeting, ...parts].join(' ').split(/\n\n/);
-
-	return {
-		name: name.trim(),
-		desc: desc.trim()
-	};
+const start = bot => {
+  modes[config.get('telegram.mode')]({
+    bot,
+    params: config.get('telegram')
+  });
 };
 
-function mergeEmpty(objValue, srcValue) {
-  return isEmpty(srcValue) ? objValue : srcValue;
-}
+const setup = async () => {
+  const bot = new Telegraf(
+    config.get('telegram.token'),
+    config.get('telegram.options')
+  );
 
-bot.command('greating', (ctx) => {
-	ctx.reply(greeting(adjectives.getAdjective()), {
-		reply_to_message_id: ctx.message.message_id,
-		parse_mode: 'Markdown'
-	})
-});
+  // Setup services
+  bot.context.trello = trello({
+    key: config.get('trello.key'),
+    token: config.get('trello.token'),
+    themesList: config.get('trello.themesList')
+  });
 
-bot.command('add', (ctx) => {
-	const content = getCardContent(ctx.message);
+  const stage = new Stage();
 
-	if (!content.name) {
-		ctx.reply(empty(), {
-			reply_to_message_id: ctx.message.message_id,
-		});
-		return;
-	}
+  await parts.init(bot);
 
-	trello
-		.addCard(content)
-		.then(({body: {url}}) => {
-			ctx.reply(add(url), {
-				reply_to_message_id: ctx.message.message_id,
-			});
-		});
-});
+  bot
+    .use(session())
+    .use(stage.middleware())
 
-bot.startPolling()
-*/
+  parts.themes.stage(stage);
+  parts.themes.init(bot);
+
+  start(bot);
+};
+
+setup();

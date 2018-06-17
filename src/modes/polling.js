@@ -10,5 +10,5 @@
  * @param {Telegraf} options.bot
  */
 module.exports = (options) => {
-    return options.bot.startPolling();
+  return options.bot.startPolling();
 }
