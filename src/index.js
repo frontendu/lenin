@@ -8,7 +8,6 @@ const modes = require('./modes');
 const parts = require('./parts');
 const trello = require('./services/trello');
 
-
 const start = bot => {
   modes[config.get('telegram.mode')]({
     bot,
