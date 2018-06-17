@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-    polling: require('./polling'),
-    webhook: require('./webhook')
+  polling: require('./polling'),
+  webhook: require('./webhook')
 }

@@ -1,3 +1,6 @@
 [*.js]
-indent_style = tab
+indent_style = space
+indent_size = 2
+
+[.eslintrc]
 indent_size = 2
