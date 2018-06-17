@@ -8,6 +8,9 @@ const {
 } = require('./templates');
 
 const Scene = require('telegraf/scenes/base');
+const Stage = require('telegraf/stage');
+
+const { leave } = Stage;
 
 const DESCRIPTION_NOT_AVAILABLE = 'DESCRIPTION_NOT_AVAILABLE';
 
@@ -119,6 +122,9 @@ const getAddThemeScene = () => {
     .enter((ctx) => {
       ctx.replyWithMarkdown(name());
     })
+    .command('cancel', ctx => {
+      ctx.scene.leave();
+    })
     .on('message', ctx => {
       if (!ctx.scene.state.name) {
         return handleName(ctx);
@@ -136,5 +142,6 @@ exports.stage = stage => {
 }
 
 exports.init = bot => {
-  bot.command('add', handleCommand);
+  bot
+  .command('add', handleCommand)
 };
