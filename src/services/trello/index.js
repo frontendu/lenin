@@ -20,7 +20,8 @@ module.exports = ({
 				key: key,
 				token: token,
 				name,
-				desc
+				desc,
+				pos
 			}
 		})
 	)
