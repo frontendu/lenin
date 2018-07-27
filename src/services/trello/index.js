@@ -11,7 +11,7 @@ module.exports = ({
 	token,
 	themesList
 }) => ({
-	addTheme: ({ name, desc }) => (
+	addTheme: ({ name, desc, pos = 'top' }) => (
 		request({
 			method: 'POST',
 			url: '/cards',
