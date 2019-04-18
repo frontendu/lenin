@@ -41,5 +41,8 @@
   },
   "browserslist": [
     "node 10"
-  ]
+  ],
+  "engines": {
+    "node": "10.x"
+  }
 }
