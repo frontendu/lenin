@@ -1,11 +1,6 @@
-import axios from 'axios';
 import config from 'config';
-import FormData from 'form-data';
 import request from 'request';
-
-const trelloClientAPI = axios.create({
-  baseURL: 'https://api.trello.com/1/'
-});
+import requestP from 'request-promise-native';
 
 export enum ThemePosition {
   TOP = 'top',
@@ -26,10 +21,12 @@ export class TrelloService {
     pos = ThemePosition.TOP,
     images
   }: ITheme) {
-    const response = await trelloClientAPI({
+    const response = await requestP({
       method: 'POST',
-      url: '/cards',
-      data: {
+      baseUrl: 'https://api.trello.com',
+      url: '/1//cards',
+      json: true,
+      body: {
         idList: config.trello.themesList,
         key: config.trello.key,
         token: config.trello.token,
@@ -39,21 +36,15 @@ export class TrelloService {
       }
     });
 
-    const {
-      data: { id }
-    } = response;
+    const { id } = response;
 
     if (images) {
       for (let image of images) {
         const formData = {
-          file: (await axios({
-            method: 'GET',
-            url: image,
-            responseType: 'stream'
-          })).data
+          file: request(image)
         };
 
-        await request({
+        request({
           method: 'POST',
           baseUrl: 'https://api.trello.com',
           url: `/1/cards/${id}/attachments`,
