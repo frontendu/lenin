@@ -1,24 +1,23 @@
 'use strict';
 
-const {
+import Scene from 'telegraf/scenes/base';
+import Stage from 'telegraf/stage';
+import Telegraf, { ContextMessageUpdate } from 'telegraf';
+import {
   cardDescription,
   description,
   name,
   thanks
-} = require('./templates');
-
-const Scene = require('telegraf/scenes/base');
-const Stage = require('telegraf/stage');
-
-const { leave } = Stage;
+} from 'app/theme/templates';
+import { TrelloService } from 'services';
 
 const DESCRIPTION_NOT_AVAILABLE = 'DESCRIPTION_NOT_AVAILABLE';
 
-const handleCommand = ctx => {
+const handleCommand = (ctx: any) => {
   ctx.scene.enter('addTheme');
 };
 
-const handleName = ctx => {
+const handleName = (ctx: any) => {
   const { state } = ctx.scene;
   const name = ctx.message.text || ctx.message.caption;
   const { first_name, last_name, username } = ctx.message.from;
@@ -44,23 +43,19 @@ const handleName = ctx => {
   });
 };
 
-const addThemeToTrello = ctx => {
-  const {
-    name,
-    desc
-  } = ctx.scene.state;
+const addThemeToTrello = (ctx: any) => {
+  const { name, desc } = ctx.scene.state;
 
-  ctx.trello.addTheme({
+  TrelloService.addTheme({
     name,
     desc
   });
 };
 
-const getMarkdownUsername = username => (
-  `[@${username}](https://t.me/${username})`
-);
+const getMarkdownUsername = (username: string) =>
+  `[@${username}](https://t.me/${username})`;
 
-const getForward = ctx => {
+const getForward = (ctx: any) => {
   if (!ctx.message) {
     return null;
   }
@@ -74,23 +69,23 @@ const getForward = ctx => {
     : getMarkdownUsername(ctx.message.forward_from.username);
 };
 
-const addUsername = ctx => {
+const addUsername = (ctx: any) => {
   Object.assign(ctx.scene.state, {
     username: getMarkdownUsername(ctx.scene.state.username)
   });
 };
 
-const addDescription = ctx => {
+const addDescription = (ctx: any) => {
   Object.assign(ctx.scene.state, {
     desc: ctx.message.text || ctx.message.caption
   });
 };
 
-const addPredefinedDescription = (ctx, desc) => {
+const addPredefinedDescription = (ctx: any, desc: string) => {
   Object.assign(ctx.scene.state, { desc });
 };
 
-const handleDescription = ctx => {
+const handleDescription = (ctx: any) => {
   ctx.scene.state.desc = cardDescription({
     forward: getForward(ctx),
     username: ctx.scene.state.username,
@@ -103,7 +98,7 @@ const handleDescription = ctx => {
   ctx.scene.leave();
 };
 
-const handleCallbackQuery = (ctx) => {
+const handleCallbackQuery = (ctx: any) => {
   switch (ctx.callbackQuery.data) {
     case DESCRIPTION_NOT_AVAILABLE: {
       addPredefinedDescription(ctx, 'Отсутствует описание');
@@ -115,17 +110,17 @@ const handleCallbackQuery = (ctx) => {
       ctx.scene.leave();
     }
   }
-}
+};
 
 const getAddThemeScene = () => {
   return new Scene('addTheme')
-    .enter((ctx) => {
+    .enter((ctx: any) => {
       ctx.replyWithMarkdown(name());
     })
-    .command('cancel', ctx => {
+    .command('cancel', (ctx: any) => {
       ctx.scene.leave();
     })
-    .on('message', ctx => {
+    .on('message', (ctx: any) => {
       if (!ctx.scene.state.name) {
         return handleName(ctx);
       }
@@ -137,11 +132,10 @@ const getAddThemeScene = () => {
     .on('callback_query', handleCallbackQuery);
 };
 
-exports.stage = stage => {
+export const handleManual = (
+  bot: Telegraf<ContextMessageUpdate>,
+  stage: Stage
+) => {
   stage.register(getAddThemeScene());
-}
-
-exports.init = bot => {
-  bot
-  .command('add', handleCommand)
+  bot.command('add', handleCommand);
 };
