@@ -5,8 +5,9 @@ module.exports = {
   telegram: {
     launch: {
       webhook: {
-        domain: process.env.TG_API_DOMAIN,
-        port: process.env.PORT
+        host: process.env.TG_API_HOST,
+        port: process.env.PORT,
+        hookPath: `/${randomBytes(16).toString('hex')}`
       }
     }
   }
