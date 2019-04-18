@@ -13,7 +13,8 @@ cache:
 
 build:
   script: npm run build
-  stage: build
+  stage:
+    - build
   only: master
 
 heroku:
