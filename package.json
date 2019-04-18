@@ -8,6 +8,7 @@
     "build": "npm-run-all -n build:*",
     "build:app": "babel -x .ts -s --parallel -d dist/ src/ config/",
     "build:config": "babel -x .ts -s --parallel -d dist/config config",
+    "start": "cd dist && NODE_PATH=. node index",
     "test": ":"
   },
   "keywords": [
@@ -17,10 +18,10 @@
   "author": "Aleksandr Shoronov <alexshoronov@gmail.com>",
   "license": "UNLICENSED",
   "dependencies": {
-    "axios": "0.18.0",
     "config": "3.1.0",
     "lodash": "4.17.11",
     "request": "2.88.0",
+    "request-promise-native": "1.0.7",
     "telegraf": "3.29.0"
   },
   "devDependencies": {

@@ -24,14 +24,14 @@ export const askTheme = async (ctx: ContextMessageUpdate) => {
 };
 
 export const addTheme = async (ctx: ContextMessageUpdate) => {
-  const { data } = await TrelloService.addTheme(
+  const { url } = await TrelloService.addTheme(
     await Theme.fromChannelMessage(
       ctx.callbackQuery.message.reply_to_message,
       ctx
     )
   );
 
-  ctx.editMessageText(`[Готово](${data.url})`, { parse_mode: 'Markdown' });
+  ctx.editMessageText(`[Готово](${url})`, { parse_mode: 'Markdown' });
 };
 
 export const clearAsk = async (ctx: ContextMessageUpdate) => {
