@@ -3,7 +3,6 @@ import { Message, PhotoSize } from 'telegram-typings';
 import { ContextMessageUpdate } from 'telegraf';
 import { MessageAnimation } from 'telegraf/typings/telegram-types';
 import { cardDescription } from 'app/theme/templates';
-import { Context } from 'vm';
 
 const SEPARATORS_LIST = ['.', ';', ':', '!', '?'];
 const SENTENCE_SEPARATOR_RE = new RegExp(
