@@ -6,8 +6,7 @@ module.exports = {
     launch: {
       webhook: {
         host: process.env.TG_API_HOST,
-        port: process.env.PORT,
-        hookPath: `/${randomBytes(16).toString('hex')}`
+        port: process.env.PORT
       }
     }
   }
