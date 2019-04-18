@@ -4,11 +4,18 @@ before_script:
   - npm install
 
 stages:
+  - build
   - deploy
 
 cache:
   paths:
     - node_modules/
+
+build:
+  script: npm run build
+  stage: build
+  only:
+    - master
 
 heroku:
   script:
