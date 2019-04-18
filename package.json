@@ -8,7 +8,7 @@
     "build": "npm-run-all -n build:*",
     "build:app": "babel -x .ts -s --parallel -d dist/ src/ config/",
     "build:config": "babel -x .ts -s --parallel -d dist/config config",
-    "start": "cd dist && NODE_PATH=. node index",
+    "start": "cd dist && NODE_PATH=. node -r source-map-support/register index",
     "test": ":"
   },
   "keywords": [
@@ -22,6 +22,7 @@
     "lodash": "4.17.11",
     "request": "2.88.0",
     "request-promise-native": "1.0.7",
+    "source-map-support": "0.5.12",
     "telegraf": "3.29.0"
   },
   "devDependencies": {
