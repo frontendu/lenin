@@ -90,8 +90,10 @@ export class Theme {
     message: Message,
     ctx: ContextMessageUpdate
   ) {
+    const text = message.text || message.caption;
+
     return {
-      name: Theme.getMainSentence(message.text || message.caption),
+      name: text ? Theme.getMainSentence(text) : 'Без названия',
       desc: Theme.getDescription(message, ctx),
       pos: ThemePosition.TOP,
       images: await Theme.getImages(message, ctx)
