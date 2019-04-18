@@ -5,7 +5,7 @@ module.exports = {
   telegram: {
     launch: {
       webhook: {
-        host: process.env.TG_API_HOST,
+        domain: process.env.TG_API_DOMAIN,
         port: process.env.PORT
       }
     }
