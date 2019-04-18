@@ -90,14 +90,11 @@ export class Theme {
     message: Message,
     ctx: ContextMessageUpdate
   ) {
-    const text = Theme.getDescription(message, ctx);
-    const images = await Theme.getImages(message, ctx);
-
     return {
-      name: Theme.getMainSentence(text),
-      desc: text,
+      name: Theme.getMainSentence(message.text || message.caption),
+      desc: Theme.getDescription(message, ctx),
       pos: ThemePosition.TOP,
-      images
+      images: await Theme.getImages(message, ctx)
     };
   }
 }
