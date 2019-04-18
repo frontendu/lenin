@@ -17,27 +17,26 @@
   "author": "Aleksandr Shoronov <alexshoronov@gmail.com>",
   "license": "UNLICENSED",
   "dependencies": {
-    "axios": "^0.18.0",
-    "config": "^1.30.0",
-    "lodash": "^4.17.11",
+    "axios": "0.18.0",
+    "config": "3.1.0",
+    "lodash": "4.17.11",
     "request": "2.88.0",
-    "telegraf": "^3.28.0"
+    "telegraf": "3.29.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.3",
-    "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "@babel/preset-typescript": "^7.3.3",
-    "@types/joi": "^14.3.3",
-    "@types/lodash": "^4.14.123",
-    "eslint": "^4.19.1",
-    "nodemon": "^1.18.11",
-    "npm-run-all": "^4.1.5",
+    "@babel/cli": "7.4.3",
+    "@babel/core": "7.4.3",
+    "@babel/preset-env": "7.4.3",
+    "@babel/preset-typescript": "7.3.3",
+    "@types/joi": "14.3.3",
+    "@types/lodash": "4.14.123",
+    "husky": "1.3.1",
+    "npm-run-all": "4.1.5",
     "prettier": "1.17.0",
-    "tslint": "^5.16.0",
+    "tslint": "5.16.0",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.0.1",
-    "typescript": "^3.4.3"
+    "typescript": "3.4.3"
   },
   "browserslist": [
     "node 10"
