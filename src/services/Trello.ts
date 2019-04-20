@@ -37,8 +37,8 @@ export class TrelloService {
     images
   }: ITheme) {
     const onlyURLRe = /^https?:\/\/[^\s]+$/
-    const description = onlyURLRe.test(desc.trim())
-      ? await TrelloService.getSiteTitle(desc)
+    const description = onlyURLRe.test(name.trim())
+      ? await TrelloService.getSiteTitle(name)
       : desc;
 
     const response = await requestP({
