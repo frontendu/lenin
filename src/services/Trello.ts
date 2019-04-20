@@ -15,7 +15,7 @@ interface ITheme {
 }
 
 export class TrelloService {
-  private static async getSiteTitle(site) {
+  private static async getSiteTitle(site: string) {
     const ogTitleRe = /<meta\sproperty="og:title"\scontent="(.*)">/;
     const titleRe = /<title>(.*)<\/title>/;
 
@@ -36,8 +36,8 @@ export class TrelloService {
     pos = ThemePosition.TOP,
     images
   }: ITheme) {
-    const onlyURLRe = /^https?:\/\/[^\s]$/
-    const description = onlyURLRe.test(desc)
+    const onlyURLRe = /^https?:\/\/[^\s]+$/
+    const description = onlyURLRe.test(desc.trim())
       ? await TrelloService.getSiteTitle(desc)
       : desc;
 
