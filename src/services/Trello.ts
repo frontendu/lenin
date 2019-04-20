@@ -26,7 +26,7 @@ export class TrelloService {
 
       return ogTitle || title;
     } catch (e) {
-      console.error(e);
+      console.error(e.message);
       return 'Без названия';
     }
   }
