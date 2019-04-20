@@ -37,9 +37,9 @@ export class TrelloService {
     images
   }: ITheme) {
     const onlyURLRe = /^https?:\/\/[^\s]+$/
-    const description = onlyURLRe.test(name.trim())
+    const fullName = onlyURLRe.test(name.trim())
       ? await TrelloService.getSiteTitle(name)
-      : desc;
+      : name;
 
     const response = await requestP({
       method: 'POST',
@@ -50,8 +50,8 @@ export class TrelloService {
         idList: config.trello.themesList,
         key: config.trello.key,
         token: config.trello.token,
-        name,
-        desc: description,
+        name: fullName,
+        desc,
         pos
       }
     });
