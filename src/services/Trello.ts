@@ -20,13 +20,14 @@ export class TrelloService {
     const titleRe = /<title>(.*)<\/title>/;
 
     try {
-      const body = await requestP(site);
+      const body = await requestP({url: site});
       const ogTitle = ogTitleRe.exec(body);
       const title = titleRe.exec(body);
 
       return ogTitle || title;
     } catch (e) {
-      return 'Без назвния';
+      console.error(e);
+      return 'Без названия';
     }
   }
 
