@@ -15,33 +15,13 @@ interface ITheme {
 }
 
 export class TrelloService {
-  private static async getSiteTitle(site: string) {
-    const ogTitleRe = /<meta\sproperty="og:title"\scontent="(.*)">/;
-    const titleRe = /<title>(.*)<\/title>/;
-
-    try {
-      const body = await requestP({url: site});
-      const ogTitle = ogTitleRe.exec(body);
-      const title = titleRe.exec(body);
-
-      return ogTitle || title;
-    } catch (e) {
-      console.error(e.message);
-      return 'Без названия';
-    }
-  }
-
   static async addTheme({
     name,
     desc,
     pos = ThemePosition.TOP,
     images
   }: ITheme) {
-    const onlyURLRe = /^https?:\/\/[^\s]+$/
-    const fullName = onlyURLRe.test(name.trim())
-      ? await TrelloService.getSiteTitle(name)
-      : name;
-
+    const onlyURLRe = /^https?:\/\/[^\s]+$/;
     const response = await requestP({
       method: 'POST',
       baseUrl: 'https://api.trello.com',
@@ -51,7 +31,7 @@ export class TrelloService {
         idList: config.trello.themesList,
         key: config.trello.key,
         token: config.trello.token,
-        name: fullName,
+        name,
         desc,
         pos
       }
