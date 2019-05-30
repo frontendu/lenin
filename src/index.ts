@@ -10,13 +10,13 @@ if (process.env.NODE_ENV === 'production') {
   app.use(bot.webhookCallback(path));
 
   const {
-    host,
-    port
+    port,
+    domain
     // @ts-ignore
   } = config.telegram.launch.webhook;
 
-  bot.telegram.setWebhook(`${host}:${port}${path}`);
-  console.log(`Bot bind to ${host}:${port}${path}`);
+  bot.telegram.setWebhook(`${domain}:${port}${path}`);
+  console.log(`Bot bind to ${domain}:${port}${path}`);
 
   app.get('/', (req: Request, res: Response) => {
     res.send('Yo, yo, yo!');
