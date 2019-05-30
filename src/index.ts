@@ -18,7 +18,6 @@ if (process.env.NODE_ENV === 'production') {
   } = config.telegram.launch.webhook;
 
   bot.telegram.setWebhook(`${domain}${path}`);
-  console.log(`Bot bind to ${domain}${path}`);
 
   app.get('/', (req: Request, res: Response) => {
     res.send('Yo, yo, yo!');
