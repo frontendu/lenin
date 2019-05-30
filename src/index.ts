@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
     res.send('Yo, yo, yo!');
   });
 
-  app.get('/patreon', (req, res) => {
+  app.post('/patreon', (req, res) => {
     console.log(req.body);
     res.sendStatus(200);
   });
