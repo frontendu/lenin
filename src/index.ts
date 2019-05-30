@@ -40,6 +40,8 @@ if (process.env.NODE_ENV === 'production') {
     async (req, res, next) => {
       const trigger = req.get('x-patreon-event');
 
+      console.log(trigger, req.body.data);
+
       const amount = `${req.body.data.attributes.pledge_amount_cents / 100.0}$`;
       const response = await got(
         req.body.data.relationships.user.links.related,
@@ -49,8 +51,6 @@ if (process.env.NODE_ENV === 'production') {
       );
 
       const { full_name, url } = response.body.data.attributes;
-
-      console.log(trigger);
 
       bot.telegram.sendMessage(
         config.telegram.chat,
