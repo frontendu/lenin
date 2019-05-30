@@ -56,7 +56,7 @@ if (process.env.NODE_ENV === 'production') {
 
       bot.telegram.sendMessage(
         config.telegram.chat,
-        `${amount} from [${full_name}](${url})`,
+        `#патрон ${amount} от [${full_name}](${url})`,
         {
           parse_mode: 'Markdown'
         }
