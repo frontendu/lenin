@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === 'production') {
         }
       );
 
-      console.log(`${amount} from ${response.body}`);
+      console.log(`${amount} from ${response.body.data.attributes.full_name}`);
 
       res.sendStatus(200);
     }
