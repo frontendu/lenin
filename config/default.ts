@@ -2,7 +2,8 @@ import { Config } from 'config';
 
 module.exports = {
   telegram: {
-    token: process.env.TG_API_TOKEN
+    token: process.env.TG_API_TOKEN,
+    chat: parseInt(process.env.TG_CHAT)
   },
   trello: {
     key: process.env.TRELLO_KEY,

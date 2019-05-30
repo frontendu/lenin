@@ -5,6 +5,7 @@ declare module 'config' {
     telegram: {
       launch: object;
       token: string;
+      chat: number;
     };
     trello: {
       key: string;
