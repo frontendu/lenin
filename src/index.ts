@@ -38,6 +38,12 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     async (req, res, next) => {
+      const trigger = req.get('x-patreon-event');
+
+      if (trigger !== 'members:pledge:create') {
+        res.sendStatus(200);
+      }
+
       const amount = `${req.body.data.attributes.pledge_amount_cents / 100.0}$`;
       const response = await got(
         req.body.data.relationships.user.links.related,
@@ -46,7 +52,15 @@ if (process.env.NODE_ENV === 'production') {
         }
       );
 
-      console.log(`${amount} from ${response.body.data.attributes.full_name}`);
+      const { full_name, url } = response.body.data.attributes;
+
+      bot.telegram.sendMessage(
+        config.telegram.chat,
+        `${amount} from [${full_name}](${url})`,
+        {
+          parse_mode: 'Markdown'
+        }
+      );
 
       res.sendStatus(200);
     }
