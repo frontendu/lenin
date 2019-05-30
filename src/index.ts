@@ -2,6 +2,7 @@ import bot from 'app';
 import config from 'config';
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
+import got from 'got';
 import { randomBytes } from 'crypto';
 
 if (process.env.NODE_ENV === 'production') {
@@ -23,8 +24,8 @@ if (process.env.NODE_ENV === 'production') {
     res.send('Yo, yo, yo!');
   });
 
-  app.post('/patreon', (req, res) => {
-    console.log(req.body);
+  app.post('/patreon', async (req, res) => {
+    require('util').inspect(req.body);
     res.sendStatus(200);
   });
 
