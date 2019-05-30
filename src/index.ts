@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
     async (req, res, next) => {
       const trigger = req.get('x-patreon-event');
 
-      if (trigger !== 'members:pledge:create') {
+      if (trigger !== 'members:create') {
         res.sendStatus(200);
       }
 
