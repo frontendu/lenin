@@ -38,8 +38,7 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     async (req, res, next) => {
-      const body = await got(req.body.data.releationships.reward.links.related);
-      console.log(require('util').inspect(body));
+      console.log(req.body.data);
       res.sendStatus(200);
     }
   );
