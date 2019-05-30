@@ -2,7 +2,6 @@ import bot from 'app';
 import config from 'config';
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
-import got from 'got';
 import { randomBytes, createHmac } from 'crypto';
 
 if (process.env.NODE_ENV === 'production') {
@@ -18,6 +17,16 @@ if (process.env.NODE_ENV === 'production') {
   } = config.telegram.launch.webhook;
 
   bot.telegram.setWebhook(`${domain}${path}`);
+
+  const getPhrase = event => {
+    const eventsMap = {
+      'members:pledge:create': 'будет платить',
+      'members:pledge:update': 'теперь будет платить',
+      'members:create': 'теперь точно платит'
+    };
+
+    return eventsMap[event];
+  };
 
   app.get('/', (req: Request, res: Response) => {
     res.send('Yo, yo, yo!');
@@ -38,23 +47,25 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     async (req, res, next) => {
-      const trigger = req.get('x-patreon-event');
+      const name = getPhrase(req.get('x-patreon-event'));
 
-      console.log(trigger, req.body.data);
+      if (!name) {
+        res.sendStatus(200);
+        return;
+      }
 
-      const amount = `${req.body.data.attributes.pledge_amount_cents / 100.0}$`;
-      const response = await got(
-        req.body.data.relationships.user.links.related,
-        {
-          json: true
-        }
-      );
+      const {
+        amount_cents,
+        full_name,
+        will_pay_amount_cents
+      } = req.body.data.attributes;
 
-      const { full_name, url } = response.body.data.attributes;
+      const cents = amount_cents || will_pay_amount_cents;
+      const amount = `${cents / 100.0}$`;
 
       bot.telegram.sendMessage(
         config.telegram.chat,
-        `#патрон ${amount} от [${full_name}](${url})`,
+        `#патрон ${amount}${name}${full_name}`,
         {
           parse_mode: 'Markdown'
         }
