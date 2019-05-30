@@ -3,7 +3,7 @@ import config from 'config';
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import got from 'got';
-import { randomBytes } from 'crypto';
+import { randomBytes, createHmac } from 'crypto';
 
 if (process.env.NODE_ENV === 'production') {
   const app = express();
@@ -25,8 +25,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 
   app.post('/patreon', async (req, res, next) => {
-    const secret = req.get('x-patreon-signature');
-    if (secret !== config.patreon.secret) {
+    const secret = createHmac('md5', config.patreon.secret)
+      .update(JSON.stringify(req.body))
+      .digest('hex');
+    const rSecret = req.get('x-patreon-signature');
+
+    if (secret !== rSecret) {
       console.error(`Invalid token ${secret}!`);
       next(new Error('Invalid token'));
       return;
