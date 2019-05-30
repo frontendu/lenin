@@ -22,7 +22,8 @@ if (process.env.NODE_ENV === 'production') {
     const eventsMap = {
       'members:pledge:create': 'будет платить',
       'members:pledge:update': 'теперь будет платить',
-      'members:create': 'теперь точно платит'
+      'members:create': 'теперь точно платит',
+      'members:delete': 'теперь не платит'
     };
 
     return eventsMap[event];
@@ -65,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
 
       bot.telegram.sendMessage(
         config.telegram.chat,
-        `#патрон ${amount}${name}${full_name}`,
+        `#патрон ${amount} ${name} ${full_name}`,
         {
           parse_mode: 'Markdown'
         }
