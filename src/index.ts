@@ -15,12 +15,15 @@ if (process.env.NODE_ENV === 'production') {
     // @ts-ignore
   } = config.telegram.launch.webhook;
 
+  bot.telegram.setWebhook(`${host}:${port}${path}`);
+  console.log(`Bot bind to ${host}:${port}${path}`);
+
   app.get('/', (req: Request, res: Response) => {
     res.send('Yo, yo, yo!');
   });
 
   app.listen(port);
+} else {
+  // @ts-ignore
+  bot.launch(config.telegram.launch);
 }
-
-// @ts-ignore
-bot.launch(config.telegram.launch);
