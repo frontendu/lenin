@@ -40,10 +40,13 @@ if (process.env.NODE_ENV === 'production') {
     async (req, res, next) => {
       const amount = `${req.body.data.attributes.pledge_amount_cents / 100.0}$`;
       const response = await got(
-        req.body.data.relationships.user.links.related
+        req.body.data.relationships.user.links.related,
+        {
+          json: true
+        }
       );
 
-      console.log(`${amount} from ${response.body.data.attributes.full_name}`);
+      console.log(`${amount} from ${response.body}`);
 
       res.sendStatus(200);
     }
