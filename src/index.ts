@@ -38,7 +38,13 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     async (req, res, next) => {
-      console.log(req.body.data);
+      const amount = `${req.body.data.attributes.pledge_amount_cents / 100.0}$`;
+      const { data } = await got(
+        req.body.data.relationships.user.links.related
+      );
+
+      console.log(`${amount} from ${data.attributes.full_name}`);
+
       res.sendStatus(200);
     }
   );
