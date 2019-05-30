@@ -2,6 +2,7 @@ import bot from 'app';
 import config from 'config';
 import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
+import got from 'got';
 import { randomBytes, createHmac } from 'crypto';
 
 if (process.env.NODE_ENV === 'production') {
@@ -37,7 +38,8 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     async (req, res, next) => {
-      console.log(require('util').inspect(req.body));
+      const body = await got(req.body.releationships.reward.links.related);
+      console.log(require('util').inspect(body));
       res.sendStatus(200);
     }
   );
