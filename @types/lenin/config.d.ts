@@ -11,6 +11,9 @@ declare module 'config' {
       token: string;
       themesList: string;
     };
+    patreon: {
+      secret: string;
+    };
   };
 
   export type Config = RecursivePartial<typeof config>;

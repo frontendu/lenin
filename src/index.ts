@@ -24,8 +24,14 @@ if (process.env.NODE_ENV === 'production') {
     res.send('Yo, yo, yo!');
   });
 
-  app.post('/patreon', async (req, res) => {
-    require('util').inspect(req.body);
+  app.post('/patreon', async (req, res, next) => {
+    if (req.get('x-patreon-signature') !== config.patreon.secret) {
+      console.error(`Invalid token!`);
+      next(new Error('Invalid token'));
+      return;
+    }
+
+    console.log(require('util').inspect(req.body));
     res.sendStatus(200);
   });
 

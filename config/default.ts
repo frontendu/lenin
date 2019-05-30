@@ -8,5 +8,8 @@ module.exports = {
     key: process.env.TRELLO_KEY,
     token: process.env.TRELLO_TOKEN,
     themesList: process.env.TRELLO_THEMES_LIST
+  },
+  patreon: {
+    secret: process.env.PATREON_SECRET
   }
 } as Config;
