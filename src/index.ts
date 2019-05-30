@@ -25,8 +25,9 @@ if (process.env.NODE_ENV === 'production') {
   });
 
   app.post('/patreon', async (req, res, next) => {
-    if (req.get('x-patreon-signature') !== config.patreon.secret) {
-      console.error(`Invalid token!`);
+    const secret = req.get('x-patreon-signature');
+    if (secret !== config.patreon.secret) {
+      console.error(`Invalid token ${secret}!`);
       next(new Error('Invalid token'));
       return;
     }
