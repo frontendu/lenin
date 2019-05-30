@@ -1,5 +1,4 @@
 import { Config } from 'config';
-import { randomBytes } from 'crypto';
 
 module.exports = {
   telegram: {
