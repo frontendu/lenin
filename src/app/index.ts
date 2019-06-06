@@ -16,10 +16,6 @@ const stage = new Stage();
 const bot = new Telegraf(config.telegram.token)
   .use(session())
   .use(stage.middleware())
-  .use((ctx, next) => {
-    console.log(ctx.chat.id);
-    next();
-  })
   .use(Composer.branch(isForward, askTheme, Composer.passThru()))
   .use(Composer.branch(noQueryFilter, clearAsk, Composer.passThru()))
   .use(Composer.branch(yesQueryFilter, addTheme, Composer.passThru()));
