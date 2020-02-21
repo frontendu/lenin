@@ -6,8 +6,8 @@
   "main": "src/index.js",
   "scripts": {
     "build": "npm-run-all -n build:*",
-    "build:app": "babel -x .ts -s --parallel -d dist/ src/ config/",
-    "build:config": "babel -x .ts -s --parallel -d dist/config config",
+    "build:app": "babel -x .ts -s -d dist/ src/ config/",
+    "build:config": "babel -x .ts -s -d dist/config config",
     "start": "cd dist && NODE_PATH=. node -r source-map-support/register index",
     "test": "jest"
   },
