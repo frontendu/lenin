@@ -3,6 +3,9 @@ import { Message, PhotoSize } from 'telegram-typings';
 import { ContextMessageUpdate } from 'telegraf';
 import { MessageAnimation } from 'telegraf/typings/telegram-types';
 import { cardDescription } from 'app/theme/templates';
+import { UtilsService } from 'services/utils.service';
+import { ParserService } from 'services/parser.service';
+import { SiteService } from 'services/site.service';
 
 const SEPARATORS_LIST = ['.', ';', ':', '!', '?'];
 const SENTENCE_SEPARATOR_RE = new RegExp(
@@ -15,8 +18,13 @@ export class Theme {
     return `[@${username}](https://t.me/${username})`;
   }
 
-  private static getMainSentence(text: string) {
+  private static async getMainSentence(text: string) {
     const sentence = text.split(SENTENCE_SEPARATOR_RE)[0];
+    const isURL = UtilsService.isURL(text);
+
+    if (isURL) {
+      return new ParserService(new SiteService()).getSiteTitle(text.trim());
+    }
 
     if (sentence.length === text.length) {
       return `${sentence
@@ -93,7 +101,7 @@ export class Theme {
     const text = message.text || message.caption;
 
     return {
-      name: text ? Theme.getMainSentence(text) : 'Без названия',
+      name: text ? await Theme.getMainSentence(text) : 'Без названия',
       desc: Theme.getDescription(message, ctx),
       pos: ThemePosition.TOP,
       images: await Theme.getImages(message, ctx)
