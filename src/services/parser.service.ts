@@ -6,7 +6,7 @@ export class ParserService {
   constructor(private readonly siteService: ISiteService) {}
 
   private async getTitleFromSite($: CheerioStatic) {
-    return $('title').text();
+    return $('title').first().text();
   }
 
   private async getHeaderFromSite($: CheerioStatic) {

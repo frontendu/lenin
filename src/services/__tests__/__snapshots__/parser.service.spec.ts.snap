@@ -2,6 +2,8 @@
 
 exports[`ParserService should properly renders blog 1`] = `"CO2 emissions on the web | Danny van Kooten"`;
 
+exports[`ParserService should properly renders devto 1`] = `"A beginner’s journey into software development in Nigeria. - DEV Community"`;
+
 exports[`ParserService should properly renders twitter 1`] = `
 "Андрей Ситник в Твиттере: «Для разработчиков npm-пакетов, которые хотят выпускать двойные ESM/CommonJS модули, я сделал  инструмент dual-publish.
 
