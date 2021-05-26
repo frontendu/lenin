@@ -23,7 +23,7 @@
     "config": "3.2.6",
     "express": "4.17.1",
     "got": "9.6.0",
-    "lodash": "4.17.19",
+    "lodash": "4.17.21",
     "request": "2.88.0",
     "request-promise-native": "1.0.7",
     "source-map-support": "0.5.12",
