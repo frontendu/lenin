@@ -1,15 +1,13 @@
 'use strict';
 
-import Scene from 'telegraf/scenes/base';
-import Stage from 'telegraf/stage';
-import Telegraf, { ContextMessageUpdate } from 'telegraf';
+import {Scenes, Telegraf} from 'telegraf';
 import {
   cardDescription,
   description,
   name,
   thanks
 } from 'app/theme/templates';
-import { TrelloService } from 'services';
+import { TrelloService } from 'services/trello.service';
 
 const DESCRIPTION_NOT_AVAILABLE = 'DESCRIPTION_NOT_AVAILABLE';
 
@@ -113,7 +111,7 @@ const handleCallbackQuery = (ctx: any) => {
 };
 
 const getAddThemeScene = () => {
-  return new Scene('addTheme')
+  return new Scenes.BaseScene('addTheme')
     .enter((ctx: any) => {
       ctx.replyWithMarkdown(name());
     })
@@ -133,8 +131,8 @@ const getAddThemeScene = () => {
 };
 
 export const handleManual = (
-  bot: Telegraf<ContextMessageUpdate>,
-  stage: Stage
+  bot: Telegraf<any>,
+  stage: Scenes.Stage<any, any>
 ) => {
   stage.register(getAddThemeScene());
   bot.command('add', handleCommand);

@@ -1,7 +1,5 @@
-import { ThemePosition } from 'services';
+import { ThemePosition } from 'services/trello.service';
 import { Message, PhotoSize } from 'telegram-typings';
-import { ContextMessageUpdate } from 'telegraf';
-import { MessageAnimation } from 'telegraf/typings/telegram-types';
 import { cardDescription } from 'app/theme/templates';
 import { UtilsService } from 'services/utils.service';
 import { ParserService } from 'services/parser.service';
@@ -46,7 +44,7 @@ export class Theme {
       : Theme.getMarkdownUsername(message.forward_from.username);
   }
 
-  private static getDescription(message: Message, ctx: ContextMessageUpdate) {
+  private static getDescription(message: Message, ctx: any) {
     return cardDescription({
       username: Theme.getMarkdownUsername(message.from.username),
       forward: Theme.getForward(message),
@@ -56,7 +54,7 @@ export class Theme {
 
   private static async getPhotoURL(
     photo: PhotoSize[],
-    ctx: ContextMessageUpdate
+    ctx: any
   ) {
     const { file_id } = photo.reduce((acc, photoItem) => {
       if (!acc) {
@@ -74,21 +72,21 @@ export class Theme {
   }
 
   private static async getAnimation(
-    message: MessageAnimation,
-    ctx: ContextMessageUpdate
+    message: any,
+    ctx: any
   ) {
     const { file_id } = message.animation;
 
     return ctx.telegram.getFileLink(file_id);
   }
 
-  private static async getImages(message: Message, ctx: ContextMessageUpdate) {
+  private static async getImages(message: Message, ctx: any) {
     if (message.photo) {
       return [await Theme.getPhotoURL(message.photo, ctx)];
     }
 
-    if ((message as MessageAnimation).animation) {
-      return [await Theme.getAnimation(message as MessageAnimation, ctx)];
+    if ((message as any).animation) {
+      return [await Theme.getAnimation(message as any, ctx)];
     }
 
     return null;
@@ -96,7 +94,7 @@ export class Theme {
 
   public static async fromChannelMessage(
     message: Message,
-    ctx: ContextMessageUpdate
+    ctx: any
   ) {
     const text = message.text || message.caption;
 
