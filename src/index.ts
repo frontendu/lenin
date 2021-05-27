@@ -23,8 +23,6 @@ if (process.env.NODE_ENV === 'production') {
       'members:pledge:create': 'будет патроном на',
       'members:pledge:update': 'изменил сумму на',
       'members:pledge:delete': 'перехотел быть патроном на',
-      'members:create': 'стал патроном на',
-      'members:delete': 'перестал быть патроном на'
     };
 
     return eventsMap[event];
@@ -48,7 +46,7 @@ if (process.env.NODE_ENV === 'production') {
         }
       }
     }),
-    async (req, res, next) => {
+    async (req, res) => {
       const name = getPhrase(req.get('x-patreon-event'));
 
       if (!name) {

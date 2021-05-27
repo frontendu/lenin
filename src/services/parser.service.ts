@@ -5,17 +5,17 @@ import { ISiteService } from 'interfaces/site.interface';
 export class ParserService {
   constructor(private readonly siteService: ISiteService) {}
 
-  private async getTitleFromSite($: CheerioStatic) {
+  private async getTitleFromSite($: cheerio.Root) {
     return $('title').first().text();
   }
 
-  private async getHeaderFromSite($: CheerioStatic) {
+  private async getHeaderFromSite($: cheerio.Root) {
     return $('h1')
       .first()
       .text();
   }
 
-  private async getMetaDescriptionFromSite($: CheerioStatic) {
+  private async getMetaDescriptionFromSite($: cheerio.Root) {
     return $('meta[name="title"]').attr('content');
   }
 

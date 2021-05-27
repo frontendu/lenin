@@ -1,6 +1,6 @@
 import config from 'config';
-import request from 'request';
-import requestP from 'request-promise-native';
+import got from 'got';
+import FormData from 'form-data';
 
 export enum ThemePosition {
   TOP = 'top',
@@ -21,13 +21,10 @@ export class TrelloService {
     pos = ThemePosition.TOP,
     images
   }: ITheme) {
-    const onlyURLRe = /^https?:\/\/[^\s]+$/;
-    const response = await requestP({
+    const {body: response} = await got('https://api.trello.com/1/cards', {
       method: 'POST',
-      baseUrl: 'https://api.trello.com',
-      url: '/1//cards',
-      json: true,
-      body: {
+      responseType: 'json',
+      json: {
         idList: config.trello.themesList,
         key: config.trello.key,
         token: config.trello.token,
@@ -37,23 +34,25 @@ export class TrelloService {
       }
     });
 
-    const { id } = response;
+    const { id } = response as any;
 
     if (images) {
       for (let image of images) {
-        const formData = {
-          file: request(image)
-        };
+        const formData = new FormData();
+        const imageUrl = image.toString();
+        const response = await got(imageUrl);
+        formData.append('file', response.rawBody, {
+          filename: 'cover.jpg',
+          contentType: 'application/octet-stream'
+        });
 
-        request({
+        await got(`https://api.trello.com/1/cards/${id}/attachments`, {
           method: 'POST',
-          baseUrl: 'https://api.trello.com',
-          url: `/1/cards/${id}/attachments`,
-          qs: {
+          searchParams: {
             key: config.trello.key,
             token: config.trello.token
           },
-          formData
+          body: formData
         });
       }
     }

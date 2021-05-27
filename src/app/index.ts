@@ -1,7 +1,5 @@
 import config from 'config';
-import Telegraf, { Composer } from 'telegraf';
-import Stage from 'telegraf/stage';
-import session from 'telegraf/session';
+import { Scenes, Telegraf, Composer, session } from 'telegraf';
 import { isForward } from 'filters';
 import {
   askTheme,
@@ -12,7 +10,7 @@ import {
   handleManual
 } from 'app/theme';
 
-const stage = new Stage();
+const stage = new Scenes.Stage();
 const bot = new Telegraf(config.telegram.token)
   .use(session())
   .use(stage.middleware())
