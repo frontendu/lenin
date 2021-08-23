@@ -11,6 +11,7 @@ import {
   addTheme,
   handleManual
 } from 'app/theme';
+import {handleThumb} from 'app/thumb';
 
 const stage = new Stage();
 const bot = new Telegraf(config.telegram.token)
@@ -21,5 +22,6 @@ const bot = new Telegraf(config.telegram.token)
   .use(Composer.branch(yesQueryFilter, addTheme, Composer.passThru()));
 
 handleManual(bot, stage);
+handleThumb(bot, stage);
 
 export default bot;
