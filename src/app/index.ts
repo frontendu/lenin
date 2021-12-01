@@ -12,10 +12,13 @@ import {
   handleManual
 } from 'app/theme';
 import {handleThumb} from 'app/thumb';
+import { inspect } from 'util';
+
 
 const stage = new Stage();
 const bot = new Telegraf(config.telegram.token)
   .use(session())
+  .use((ctx, next) => {console.log(inspect(ctx.update)); next()})
   .use(stage.middleware())
   .use(Composer.branch(isForward, askTheme, Composer.passThru()))
   .use(Composer.branch(noQueryFilter, clearAsk, Composer.passThru()))
